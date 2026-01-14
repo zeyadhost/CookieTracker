@@ -10,6 +10,7 @@ A real-time visual dashboard for tracking FlavorTown cookie progress.
 
 ## Features
 
+- Similar vibes to [Flavortown](https://github.com/hackclub/flavortown)'s UI
 - Real-time data fetching from FlavorTown API
 - Dynamic laptop visualization that updates based on milestones
 - Cookie velocity tracking with prediction algorithms
