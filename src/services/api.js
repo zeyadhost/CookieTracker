@@ -1,11 +1,11 @@
 const FLAVORTOWN_BASE = '/flavortown-api';
 
-const API_KEY = import.meta.env.VITE_FLAVORTOWN_API_KEY;
-
-export async function fetchUserProfile(userId) {
+export async function fetchUserProfile(userId, apiKey = null) {
+  const key = apiKey || localStorage.getItem('flavortown_api_key') || import.meta.env.VITE_FLAVORTOWN_API_KEY;
+  
   const response = await fetch(`${FLAVORTOWN_BASE}/users/${userId}`, {
     headers: {
-      'Authorization': `Bearer ${API_KEY}`,
+      'Authorization': `Bearer ${key}`,
     },
   });
 
@@ -17,9 +17,11 @@ export async function fetchUserProfile(userId) {
 }
 
 export async function fetchStoreItems() {
+  const apiKey = localStorage.getItem('flavortown_api_key') || import.meta.env.VITE_FLAVORTOWN_API_KEY;
+  
   const response = await fetch(`${FLAVORTOWN_BASE}/store`, {
     headers: {
-      'Authorization': `Bearer ${API_KEY}`,
+      'Authorization': `Bearer ${apiKey}`,
     },
   });
 

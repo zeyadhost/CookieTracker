@@ -61,3 +61,14 @@ h1, h2, h3, h4, h5, h6 {
 p, span, div {
   font-family: "Sour Gummy", sans-serif;
 }
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
