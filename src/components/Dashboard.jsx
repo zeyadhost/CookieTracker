@@ -4,7 +4,7 @@ import { fetchCookieStats } from '../services/api';
 import StatsPanel from './StatsPanel';
 import LaptopVisualization from './LaptopVisualization';
 
-function Dashboard() {
+function Dashboard({ targetItem }) {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -76,8 +76,8 @@ function Dashboard() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <StatsPanel stats={stats} />
-      <LaptopVisualization milestones={stats?.milestones || []} />
+      <StatsPanel stats={stats} targetItem={targetItem} />
+      <LaptopVisualization targetItem={targetItem} totalCookies={stats?.totalCookies || 0} />
     </motion.div>
   );
 }

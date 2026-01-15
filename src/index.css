@@ -21,6 +21,7 @@
 :root {
   --color-bg: hsl(35, 74%, 90%);
   --color-bg-2: hsl(39, 52%, 80%);
+  --color-bg-rgb: 242, 225, 198;
   --color-text-header: hsl(348, 28%, 24%);
   --color-text-body: hsl(7, 40%, 25%);
   --color-text-muted: hsl(7, 14%, 37%);
@@ -28,7 +29,10 @@
   --color-green-500: hsl(105, 44%, 35%);
   --color-blue-500: hsl(214, 39%, 39%);
   --color-yellow-500: hsl(31, 63%, 46%);
+  --color-brown-300: hsl(23, 34%, 68%);
   --color-brown-400: hsl(23, 34%, 51%);
+  --color-brown-500: hsl(23, 40%, 40%);
+  --color-brown-600: hsl(23, 45%, 30%);
   --color-tan-300: hsl(39, 52%, 80%);
   --shadow: 0px 0px 2px 1px hsla(0, 0%, 0%, 0.25);
   --border-radius: 0.8rem;
