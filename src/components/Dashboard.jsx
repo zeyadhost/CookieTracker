@@ -1,7 +1,8 @@
 function Dashboard() {
   return (
-    <div>
-      <h2>Dashboard</h2>
+    <div className="grid lg:grid-cols-2 gap-8">
+      <div></div>
+      <div></div>
     </div>
   )
 }

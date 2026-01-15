@@ -1,7 +1,17 @@
 function App() {
   return (
-    <div>
-      <h1>Cookie Tracker</h1>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg)' }}>
+      <main className="container mx-auto px-4 py-12 max-w-6xl">
+        <h1 
+          className="text-6xl text-center mb-12"
+          style={{
+            fontFamily: 'Jua, cursive',
+            color: 'var(--color-text-header)',
+          }}
+        >
+          🍪 Cookie Tracker
+        </h1>
+      </main>
     </div>
   )
 }
