@@ -1,3 +1,5 @@
+import Dashboard from './components/Dashboard';
+
 function App() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bg)' }}>
@@ -11,6 +13,7 @@ function App() {
         >
           🍪 Cookie Tracker
         </h1>
+        <Dashboard />
       </main>
     </div>
   )
