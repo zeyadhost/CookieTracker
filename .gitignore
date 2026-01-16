@@ -6,3 +6,4 @@ roadmap.md
 # Environment variables
 .env.local
 .env
+.vercel
