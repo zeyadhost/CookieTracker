@@ -1,5 +1,4 @@
 function StatsPanel({ stats, targetItem }) {
-  // totalCost includes base item + any selected accessories
   const targetCost = targetItem?.totalCost || targetItem?.ticket_cost?.base_cost || 0;
   const currentCookies = stats?.totalCookies ?? 0;
   const progress = targetCost > 0 ? Math.min((currentCookies / targetCost) * 100, 100) : 0;

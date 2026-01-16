@@ -3,6 +3,21 @@
     {
       "source": "/flavortown-api/:path*",
       "destination": "https://flavortown.hackclub.com/api/v1/:path*"
+    },
+    {
+      "source": "/flavortown-images/:path*",
+      "destination": "https://flavortown.hackclub.com/rails/active_storage/blobs/proxy/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/flavortown-images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ],
   "buildCommand": "npm run build",

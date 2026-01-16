@@ -1,5 +1,6 @@
+import { getProxiedImageUrl } from '../utils/imageProxy';
+
 function LaptopVisualization({ targetItem, totalCookies }) {
-  // totalCost includes base item + any selected accessories
   const targetCost = targetItem?.totalCost || targetItem?.ticket_cost?.base_cost || 0;
   const progress = targetCost > 0 ? Math.min((totalCookies / targetCost) * 100, 100) : 0;
   const accessories = targetItem?.accessories || [];
@@ -28,7 +29,7 @@ function LaptopVisualization({ targetItem, totalCookies }) {
             {targetItem.image_url ? (
               <>
                 <img 
-                  src={targetItem.image_url} 
+                  src={getProxiedImageUrl(targetItem.image_url)} 
                   alt={targetItem.name}
                   className="max-w-full max-h-full object-contain transition-all duration-500 p-4"
                   style={{
@@ -114,7 +115,7 @@ function LaptopVisualization({ targetItem, totalCookies }) {
                     }}
                   >
                     {acc.image_url && (
-                      <img src={acc.image_url} alt="" className="w-4 h-4 object-contain" />
+                      <img src={getProxiedImageUrl(acc.image_url)} alt="" className="w-4 h-4 object-contain" />
                     )}
                     {acc.name}
                   </div>

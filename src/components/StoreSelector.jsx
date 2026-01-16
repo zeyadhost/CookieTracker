@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchStoreItems } from '../services/api';
+import { getProxiedImageUrl } from '../utils/imageProxy';
 
 // Friendly display names for API types
 const TYPE_LABELS = {
@@ -26,7 +27,7 @@ function StoreSelector({ onSelect, onClose }) {
   const [filter, setFilter] = useState('all');
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedAccessories, setSelectedAccessories] = useState([]);
-  const [step, setStep] = useState('main'); // 'main' or 'accessories'
+  const [step, setStep] = useState('main');
 
   useEffect(() => {
     async function loadItems() {
@@ -45,10 +46,8 @@ function StoreSelector({ onSelect, onClose }) {
     loadItems();
   }, []);
 
-  // Main items (not accessories)
   const mainItems = allItems.filter(item => item.type !== 'ShopItem::Accessory');
   
-  // Get accessories for selected item
   const availableAccessories = selectedItem 
     ? allItems.filter(item => 
         item.type === 'ShopItem::Accessory' && 
@@ -56,7 +55,6 @@ function StoreSelector({ onSelect, onClose }) {
       )
     : [];
 
-  // Group accessories by their tag (ram, storage, etc.)
   const accessoryGroups = availableAccessories.reduce((groups, acc) => {
     const tag = acc.accessory_tag || 'other';
     if (!groups[tag]) groups[tag] = [];
@@ -64,7 +62,6 @@ function StoreSelector({ onSelect, onClose }) {
     return groups;
   }, {});
 
-  // Sort groups and items by cost
   Object.keys(accessoryGroups).forEach(tag => {
     accessoryGroups[tag].sort((a, b) => (a.ticket_cost?.base_cost || 0) - (b.ticket_cost?.base_cost || 0));
   });
@@ -75,17 +72,13 @@ function StoreSelector({ onSelect, onClose }) {
     ? mainItems 
     : mainItems.filter(item => item.type === filter);
 
-  // Select accessory - only one per tag group
   const selectAccessory = (accessory) => {
     const tag = accessory.accessory_tag || 'other';
     setSelectedAccessories(prev => {
-      // Check if this exact accessory is already selected
       const exists = prev.find(a => a.id === accessory.id);
       if (exists) {
-        // Deselect it
         return prev.filter(a => a.id !== accessory.id);
       }
-      // Remove any other accessory with the same tag and add this one
       return [...prev.filter(a => (a.accessory_tag || 'other') !== tag), accessory];
     });
   };
@@ -143,7 +136,6 @@ function StoreSelector({ onSelect, onClose }) {
         exit={{ scale: 0.9, opacity: 0 }}
         transition={{ duration: 0.3 }}
       >
-        {/* Header */}
         <div 
           className="p-6 border-b"
           style={{ backgroundColor: 'var(--color-bg-2)', borderColor: 'var(--color-brown-400)' }}
@@ -187,7 +179,7 @@ function StoreSelector({ onSelect, onClose }) {
           {step === 'accessories' && selectedItem && (
             <div className="flex items-center justify-center gap-4 mt-4 p-3 rounded-lg" style={{ backgroundColor: 'var(--color-bg)' }}>
               {selectedItem.image_url && (
-                <img src={selectedItem.image_url} alt={selectedItem.name} className="w-12 h-12 object-contain" />
+                <img src={getProxiedImageUrl(selectedItem.image_url)} alt={selectedItem.name} className="w-12 h-12 object-contain" />
               )}
               <div>
                 <p style={{ fontFamily: 'Jua, cursive', color: 'var(--color-text-header)' }}>{selectedItem.name}</p>
@@ -199,7 +191,6 @@ function StoreSelector({ onSelect, onClose }) {
           )}
         </div>
 
-        {/* Content */}
         <div className="flex-1 overflow-y-auto p-6">
           {loading && (
             <div className="flex justify-center py-12">
@@ -228,7 +219,6 @@ function StoreSelector({ onSelect, onClose }) {
             </div>
           )}
 
-          {/* Main Items Grid */}
           {!loading && !error && step === 'main' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredItems.map(item => (
@@ -248,7 +238,7 @@ function StoreSelector({ onSelect, onClose }) {
                   {item.image_url && (
                     <div className="aspect-square rounded-lg overflow-hidden mb-3 bg-white/50">
                       <img 
-                        src={item.image_url} 
+                        src={getProxiedImageUrl(item.image_url)} 
                         alt={item.name}
                         className="w-full h-full object-contain"
                       />
@@ -304,7 +294,6 @@ function StoreSelector({ onSelect, onClose }) {
             </div>
           )}
 
-          {/* Accessories - Grouped by tag */}
           {!loading && !error && step === 'accessories' && (
             <div className="space-y-6">
               {Object.entries(accessoryGroups).map(([tag, accessories]) => (
@@ -334,7 +323,6 @@ function StoreSelector({ onSelect, onClose }) {
                           whileTap={{ scale: 0.99 }}
                         >
                           <div className="flex items-center gap-3">
-                            {/* Radio-style indicator */}
                             <div 
                               className="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0"
                               style={{ 
@@ -379,7 +367,6 @@ function StoreSelector({ onSelect, onClose }) {
           )}
         </div>
 
-        {/* Footer */}
         <div 
           className="p-4 border-t flex items-center gap-3"
           style={{ backgroundColor: 'var(--color-bg-2)', borderColor: 'var(--color-brown-400)' }}

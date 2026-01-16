@@ -10,6 +10,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/flavortown-api/, '/api/v1'),
       },
+      '/flavortown-images': {
+        target: 'https://flavortown.hackclub.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/flavortown-images/, '/rails/active_storage/blobs/proxy'),
+      },
       '/hackatime-api': {
         target: 'https://hackatime.hackclub.com',
         changeOrigin: true,
